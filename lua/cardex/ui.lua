@@ -54,6 +54,15 @@ M.show_links = function(note, opts)
     end)
     :totable()
 
+  if #contents == 0 then
+    vim.api.nvim_echo(
+      { { "[cardex.nvim] No links found for `" .. note .. "`", "DiagnosticWarn" } },
+      true,
+      {}
+    )
+    return nil
+  end
+
   -- TODO: Add section header with counts
   -- table.insert(
   --   contents,
