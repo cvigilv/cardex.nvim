@@ -16,6 +16,7 @@ M.setup = function(opts)
   require("cardex.excmd").create_excmds(opts)
   require("cardex.autocmd").setup(opts)
   require("cardex.cmp").setup(opts)
+  require("cardex.highlights").setup(opts)
 
   _G.cardex = {}
 end
