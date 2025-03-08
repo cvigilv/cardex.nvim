@@ -211,10 +211,7 @@ M.get_all_tags = function(opts)
   -- Get tags for each note in zettelaksten
   local all_note_tags = {}
   for _, note in ipairs(all_notes) do
-    if not all_note_tags[note] then
-      all_note_tags[note] = {}
-    end
-    table.insert(all_note_tags[note], M.get_tags(note))
+    all_note_tags[note] = M.get_tags(note)
   end
 
   return all_note_tags
@@ -291,19 +288,19 @@ end
 ---@see M.get_from_links
 M.get_to_links = function(note, opts)
   -- Read file content
-  local content = read_n_lines(note, -1)
+  local content = vim.fn.readfile(note)
 
-  -- Get "from"/foward links in note
-  local from_links = {}
+  -- Get "to"/foward links in note
+  local to_links = {}
   if content ~= nil then
     for _, line in ipairs(content) do
       for match in line:gmatch("%[.-%]%((.-%.md)%)") do
-        table.insert(from_links, vim.fn.resolve(opts.path .. match))
+        table.insert(to_links, vim.fn.resolve(opts.path .. match))
       end
     end
   end
 
-  return from_links
+  return to_links
 end
 
 ---Get "from" links for a given note in a Zettelkasten system.
